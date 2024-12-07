@@ -8,7 +8,7 @@ import ErrorBlock from '../components/ErrorBlock';
 import { filesService } from '../services/file.service';
 import UploadFile from '../components/UploadFile';
 
-const Dashboard = () => {
+const Dashboard: React.ComponentType = () => {
   const response = useQuery({
     queryKey: ['file-list'],
     queryFn: async () => {

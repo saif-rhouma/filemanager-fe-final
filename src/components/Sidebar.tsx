@@ -1,4 +1,15 @@
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../configs/routes.path';
+
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = useCallback(() => {
+    localStorage.clear();
+    navigate(routes.home);
+  }, []);
+
   return (
     <aside
       className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
@@ -10,11 +21,7 @@ const Sidebar = () => {
           aria-hidden="true"
           id="iconSidenav"
         ></i>
-        <a
-          className="navbar-brand m-0"
-          href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html "
-          target="_blank"
-        >
+        <a className="navbar-brand m-0" target="_blank">
           <img
             src="../assets/img/logo-ct-dark.png"
             className="navbar-brand-img h-100"
@@ -30,7 +37,7 @@ const Sidebar = () => {
       >
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link active" href="../pages/dashboard.html">
+            <a className="nav-link active">
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -71,7 +78,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="../pages/tables.html">
+            <a className="nav-link">
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -116,7 +123,13 @@ const Sidebar = () => {
           </li>
 
           <li className="nav-item">
-            <a className="nav-link" href="../pages/virtual-reality.html">
+            <a
+              className="nav-link"
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                handleLogout();
+              }}
+            >
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
