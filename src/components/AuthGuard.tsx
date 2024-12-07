@@ -11,16 +11,8 @@ const AuthGuard: React.FC<IAuthGuard> = ({ children }) => {
   const accessToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
 
   if (!accessToken) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
-
-  // try {
-  //   jwtDecode(accessToken);
-  // } catch (_) {
-  //   sessionStorage.removeItem('access_token');
-
-  //   return <Navigate to="/login" />;
-  // }
 
   return children;
 };
