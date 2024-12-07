@@ -18,6 +18,7 @@ const Login = () => {
     onSuccess: (data) => {
       console.log('Login Successful:', data);
       toast.info('Logged in successfully!');
+
       navigate(routes.dashboard.root);
     },
     onError: () => {

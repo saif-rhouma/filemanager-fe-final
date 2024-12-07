@@ -6,6 +6,7 @@ import { endpoints } from '../utils/axios';
 import LoadingScreen from '../components/LoadingScreen';
 import ErrorBlock from '../components/ErrorBlock';
 import { filesService } from '../services/file.service';
+import UploadFile from '../components/UploadFile';
 
 const Dashboard = () => {
   const response = useQuery({
@@ -27,6 +28,7 @@ const Dashboard = () => {
       <Sidebar />
       <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
         <DashBoardHeaderNav />
+        <UploadFile />
         <div className="container-fluid py-4">
           <div className="row">
             <div className="col-12">

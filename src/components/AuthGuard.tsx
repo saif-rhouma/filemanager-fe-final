@@ -7,13 +7,13 @@ interface IAuthGuard {
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 
-const AuthGuard: React.FC<IAuthGuard> = ({ children }) => {
-  const accessToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
+const AuthGuard = ({ children }) => {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
 
   if (!accessToken) {
     return <Navigate to="/" />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 export default AuthGuard;

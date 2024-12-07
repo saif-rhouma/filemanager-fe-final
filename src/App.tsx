@@ -7,11 +7,11 @@ import Dashboard from './layouts/Dashboard';
 import Login from './pages/Login';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const wrapWithAuthGuard = (Component: any) => (
-  <AuthGuard>
-    <Component />
-  </AuthGuard>
-);
+// const wrapWithAuthGuard = (Component) => (
+//   <AuthGuard>
+//     <Component />
+//   </AuthGuard>
+// );
 
 function App() {
   return (
@@ -19,13 +19,9 @@ function App() {
       <ToastContainer position="top-right" />
       <Routes>
         <Route path="/" element={<Login />} />
-
-        <Route path="dashboard" element={wrapWithAuthGuard(<Dashboard />)}>
-          <Route index element={wrapWithAuthGuard(<Dashboard />)} />
-          <Route
-            path={routes.dashboard.root}
-            element={wrapWithAuthGuard(<Dashboard />)}
-          />
+        <Route path="dashboard" element={<Dashboard />}>
+          <Route index element={<Dashboard />} />
+          <Route path={routes.dashboard.root} element={<Dashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>
