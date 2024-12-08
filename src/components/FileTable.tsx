@@ -7,7 +7,7 @@ import { FaRegFileImage } from 'react-icons/fa6';
 import { SiPrivateinternetaccess } from 'react-icons/si';
 import { MdPublic } from 'react-icons/md';
 import { RiStickyNoteAddLine } from 'react-icons/ri';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Dialog from './Dialog';
 import TagDialogContent from './TagDialogContent';
 import { IFile } from '../types/file';
@@ -18,18 +18,24 @@ interface IFileTableProps {
 
 const FileTable: React.FC<IFileTableProps> = ({ files }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpenShare, setIsDialogOpenShare] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | undefined>();
+  const [shareLink, setShareLink] = useState('');
   const queryClient = useQueryClient();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleSelectValue = () => {
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
+  };
 
   const { mutate: activateShare } = useMutation({
     mutationFn: ({ fileId, isShared }: { fileId: string; isShared: boolean }) =>
       filesService.activateShare({ fileId, isShared }),
     onSuccess: async (file) => {
       if (file.isShared) {
-        navigator.clipboard.writeText(
-          CONFIG.site.serverUrl + `api/public/shared/view/${file.id}`
-        );
-        toast.success('The Link In on your Clipboard . JUST PAST');
+        handleCopySharedLink(file);
       } else {
         toast.success('File Is private!');
       }
@@ -41,10 +47,14 @@ const FileTable: React.FC<IFileTableProps> = ({ files }) => {
   });
 
   const handleCopySharedLink = useCallback((file: IFile) => {
-    navigator.clipboard.writeText(
-      CONFIG.site.serverUrl + `api/public/shared/view/${file.id}`
-    );
-    toast.success('The Link In on your Clipboard . JUST PAST');
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(
+        CONFIG.site.serverUrl + `api/public/shared/view/${file.id}`
+      );
+    }
+    setShareLink(CONFIG.site.serverUrl + `api/public/shared/view/${file.id}`);
+    setIsDialogOpenShare(true);
+    toast.success('The Link In on your Clipboard. [IN CASE HTTPS]');
   }, []);
 
   return (
@@ -53,6 +63,19 @@ const FileTable: React.FC<IFileTableProps> = ({ files }) => {
         <TagDialogContent
           onClose={() => setIsDialogOpen(false)}
           fileId={selectedFile}
+        />
+      </Dialog>
+      <Dialog
+        isOpen={isDialogOpenShare}
+        onClose={() => setIsDialogOpenShare(false)}
+      >
+        <h6 className="mb-4">Sharing Link</h6>
+        <input
+          ref={inputRef}
+          type="text"
+          className="form-control"
+          onClick={handleSelectValue}
+          value={shareLink}
         />
       </Dialog>
       <div className="card mb-4">
