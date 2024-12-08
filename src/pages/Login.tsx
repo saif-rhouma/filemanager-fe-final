@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import { useAuthApi } from '../hooks/use-auth-api';
 import { useMutation } from '@tanstack/react-query';
@@ -11,7 +10,7 @@ const Login = () => {
   const { login } = useAuthApi();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+  const [, setError] = useState('');
 
   const { mutate: authLogin } = useMutation({
     mutationFn: login,
@@ -27,13 +26,13 @@ const Login = () => {
   });
 
   // Handle input changes
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = formData;
     if (!email || !password) {
@@ -97,17 +96,6 @@ const Login = () => {
                         </button>
                       </div>
                     </form>
-                  </div>
-                  <div className="card-footer text-center pt-0 px-lg-2 px-1">
-                    <p className="mb-4 text-sm mx-auto">
-                      Don't have an account?
-                      <a
-                        href="javascript:;"
-                        className="text-info text-gradient font-weight-bold"
-                      >
-                        Sign up
-                      </a>
-                    </p>
                   </div>
                 </div>
               </div>

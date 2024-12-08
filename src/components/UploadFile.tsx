@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import axiosInstance, { endpoints } from '../utils/axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const UploadFile = () => {
-  const [file, setFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0]);
+    }
   };
 
   const handleUpload = async () => {
@@ -30,7 +33,7 @@ const UploadFile = () => {
   };
 
   const { mutate: handleUploadFile } = useMutation({
-    mutationFn: (fnFile) =>
+    mutationFn: (fnFile: FormData) =>
       axiosInstance.post(endpoints.file.upload, fnFile, uploadConfig),
     onSuccess: async ({ data }) => {
       await queryClient.invalidateQueries({ queryKey: ['file-list'] });
@@ -38,6 +41,9 @@ const UploadFile = () => {
     },
     onSettled: async () => {
       setFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
       setUploadStatus('');
     },
     onError: (err) => {
@@ -54,7 +60,6 @@ const UploadFile = () => {
         gap: 10,
       }}
     >
-      {' '}
       <div
         className="mb-3"
         style={{
@@ -64,6 +69,7 @@ const UploadFile = () => {
         }}
       >
         <input
+          ref={fileInputRef}
           type="file"
           className="form-control"
           onChange={handleFileChange}

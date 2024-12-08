@@ -37,4 +37,7 @@ export const endpoints = {
     share: '/api/file',
     viewFile: 'api/file/',
   },
+  tag: {
+    add: '/api/tag',
+  },
 };

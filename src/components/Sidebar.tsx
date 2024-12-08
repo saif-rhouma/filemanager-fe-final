@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { routes } from '../configs/routes.path';
 
 const Sidebar = () => {
@@ -8,7 +8,7 @@ const Sidebar = () => {
   const handleLogout = useCallback(() => {
     localStorage.clear();
     navigate(routes.home);
-  }, []);
+  }, [navigate]);
 
   return (
     <aside
@@ -37,7 +37,7 @@ const Sidebar = () => {
       >
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link active">
+            <NavLink className="nav-link" to={routes.dashboard.root} end>
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -49,14 +49,14 @@ const Sidebar = () => {
                   <title>shop</title>
                   <g
                     stroke="none"
-                    stroke-width="1"
+                    strokeWidth="1"
                     fill="none"
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                   >
                     <g
                       transform="translate(-1716.000000, -439.000000)"
                       fill="#FFFFFF"
-                      fill-rule="nonzero"
+                      fillRule="nonzero"
                     >
                       <g transform="translate(1716.000000, 291.000000)">
                         <g transform="translate(0.000000, 148.000000)">
@@ -75,10 +75,10 @@ const Sidebar = () => {
                 </svg>
               </div>
               <span className="nav-link-text ms-1">Dashboard</span>
-            </a>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link">
+            <NavLink className="nav-link" to={routes.dashboard.filemanager}>
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -90,14 +90,14 @@ const Sidebar = () => {
                   <title>office</title>
                   <g
                     stroke="none"
-                    stroke-width="1"
+                    strokeWidth="1"
                     fill="none"
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                   >
                     <g
                       transform="translate(-1869.000000, -293.000000)"
                       fill="#FFFFFF"
-                      fill-rule="nonzero"
+                      fillRule="nonzero"
                     >
                       <g transform="translate(1716.000000, 291.000000)">
                         <g
@@ -119,11 +119,10 @@ const Sidebar = () => {
                 </svg>
               </div>
               <span className="nav-link-text ms-1">File Manager</span>
-            </a>
+            </NavLink>
           </li>
-
           <li className="nav-item">
-            <a
+            <button
               className="nav-link"
               style={{ cursor: 'pointer' }}
               onClick={() => {
@@ -141,14 +140,14 @@ const Sidebar = () => {
                   <title>box-3d-50</title>
                   <g
                     stroke="none"
-                    stroke-width="1"
+                    strokeWidth="1"
                     fill="none"
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                   >
                     <g
                       transform="translate(-2319.000000, -291.000000)"
                       fill="#FFFFFF"
-                      fill-rule="nonzero"
+                      fillRule="nonzero"
                     >
                       <g transform="translate(1716.000000, 291.000000)">
                         <g transform="translate(603.000000, 0.000000)">
@@ -171,7 +170,7 @@ const Sidebar = () => {
                 </svg>
               </div>
               <span className="nav-link-text ms-1">Log out</span>
-            </a>
+            </button>
           </li>
         </ul>
       </div>

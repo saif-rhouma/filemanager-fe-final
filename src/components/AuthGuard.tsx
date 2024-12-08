@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
 interface IAuthGuard {
@@ -7,7 +7,7 @@ interface IAuthGuard {
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 
-const AuthGuard = ({ children }) => {
+const AuthGuard = ({ children }: IAuthGuard) => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
 
   if (!accessToken) {

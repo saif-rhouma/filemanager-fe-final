@@ -46,39 +46,39 @@ const AuthProvider = ({ children }: Props) => {
     };
   }, [token]);
 
-  // useLayoutEffect(() => {
-  //   const refreshInterceptor = axiosInstance.interceptors.response.use(
-  //     (response) => response,
-  //     async (error) => {
-  //       const originalRequest = error.config;
-  //       const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
-  //       if (error.statusCode === 401 && refreshToken) {
-  //         try {
-  //           const response = await axiosInstance.post(
-  //             endpoints.auth.refreshToken,
-  //             {
-  //               refreshToken: `Bearer ${refreshToken}`,
-  //             }
-  //           );
+  useLayoutEffect(() => {
+    const refreshInterceptor = axiosInstance.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+        const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+        if (error.statusCode === 401 && refreshToken) {
+          try {
+            const response = await axiosInstance.post(
+              endpoints.auth.refreshToken,
+              {
+                refreshToken: `Bearer ${refreshToken}`,
+              }
+            );
 
-  //           localStorage.setItem(ACCESS_TOKEN_KEY, response.data.accessToken);
+            localStorage.setItem(ACCESS_TOKEN_KEY, response.data.accessToken);
 
-  //           originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
-  //           originalRequest._retry = true;
-  //           return axiosInstance(originalRequest);
-  //         } catch (error) {
-  //           localStorage.removeItem(ACCESS_TOKEN_KEY);
-  //           localStorage.removeItem(REFRESH_TOKEN_KEY);
-  //         }
-  //       }
-  //       return Promise.reject(error);
-  //     }
-  //   );
+            originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+            originalRequest._retry = true;
+            return axiosInstance(originalRequest);
+          } catch (error) {
+            localStorage.removeItem(ACCESS_TOKEN_KEY);
+            localStorage.removeItem(REFRESH_TOKEN_KEY);
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
 
-  //   return () => {
-  //     axiosInstance.interceptors.response.eject(refreshInterceptor);
-  //   };
-  // }, [token]);
+    return () => {
+      axiosInstance.interceptors.response.eject(refreshInterceptor);
+    };
+  }, [token]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
