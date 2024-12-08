@@ -73,6 +73,7 @@ const UploadFile = () => {
           type="file"
           className="form-control"
           onChange={handleFileChange}
+          accept="image/*,video/*"
         />
       </div>
       <div
