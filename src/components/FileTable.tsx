@@ -11,6 +11,7 @@ import { useCallback, useRef, useState } from 'react';
 import Dialog from './Dialog';
 import TagDialogContent from './TagDialogContent';
 import { IFile } from '../types/file';
+import { fileSizeFormatter } from '../utils/fomatter';
 
 interface IFileTableProps {
   files: IFile[];
@@ -138,7 +139,7 @@ const FileTable: React.FC<IFileTableProps> = ({ files }) => {
                     </td>
                     <td className="align-middle text-center text-sm">
                       <span className="badge badge-sm bg-gradient-success">
-                        {file.size}
+                        {fileSizeFormatter(file.size)}
                       </span>
                     </td>
                     <td className="align-middle text-center">

@@ -1,4 +1,5 @@
 import { IFile } from '../types/file';
+import { fileSizeFormatter } from '../utils/fomatter';
 
 interface FileIconProps {
   file: IFile;
@@ -42,7 +43,7 @@ const FileIcon: React.FC<FileIconProps> = ({
         <div className="file-man-title" onClick={showTags}>
           <h5 className="mb-0 text-overflow">{file.fileOriginalName}</h5>
           <p className="mb-0">
-            <small>568.8 kb</small>
+            <small>{fileSizeFormatter(file.size)}</small>
           </p>
         </div>
       </div>
